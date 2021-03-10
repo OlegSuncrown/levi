@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
+import { ActivatedService } from 'src/app/services/activated.service';
 
 @Component({
   selector: 'app-activated-page',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./activated-page.component.scss']
 })
 export class ActivatedPageComponent implements OnInit {
+  users$: any;
+  displayedColumns: string[] = ['position', 'name', 'username', 'email'];
 
-  constructor() { }
+  constructor(
+    private activatedService: ActivatedService
+  ) { }
 
   ngOnInit(): void {
+    this.users$ = this.activatedService.getSelectedUsers$()
   }
 
 }

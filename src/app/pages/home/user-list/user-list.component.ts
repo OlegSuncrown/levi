@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { PageEvent } from '@angular/material/paginator';
+import { ActivatedService } from 'src/app/services/activated.service';
 
 @Component({
   selector: 'app-user-list',
@@ -18,19 +19,14 @@ export class UserListComponent implements OnInit {
   showFirstLastButtons = false;
   url = 'https://jsonplaceholder.typicode.com/users'
 
-  data = []
-  constructor(private dataService: DataService) { }
+  isSelected = false
+  constructor(
+    private dataService: DataService,
+    public activatedService: ActivatedService
+  ) { }
 
   ngOnInit(): void {
     const url = `${this.url}?_start=${this.pageIndex * this.pageSize}&_limit=${this.pageSize}`
-    this.users$ = this.dataService.loadData(url)
-  }
-
-  findIncluded (id){
-    return this.data.find(item => item.id === id)
-  }
-
-  fetchData(url) {
     this.users$ = this.dataService.loadData(url)
   }
 
@@ -43,13 +39,12 @@ export class UserListComponent implements OnInit {
     this.pageIndex = pageIndex;
   }
 
-  handleClick(item) {
-    if(this.findIncluded(item.id)) {
-      this.data = this.data.filter((user) => {
-       return user.id !== item.id
-      })
+  handleClick(user) {
+    this.isSelected = this.activatedService.isUserSelected(user.id)
+    if(this.isSelected) {
+      this.activatedService.deleteUser(user.id)
     } else {
-      this.data.push(item)
+      this.activatedService.addUser(user)
     }
   }
 }
