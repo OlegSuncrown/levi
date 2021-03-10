@@ -10,44 +10,30 @@
   >
   </mat-paginator>
 
-    <div *ngFor="let post of posts">
+  <div class="flex-container">
+    <ng-container *ngFor="let post of posts" class="flex-container">
       <mat-card class="example-card">
         <mat-card-header>
-          <div mat-card-avatar class="example-header-image"></div>
-          <mat-card-title>Shiba Inu</mat-card-title>
-          <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+          <mat-card-title>{{post.title}}</mat-card-title>
+          <mat-card-subtitle>{{post.id}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
           <p>
-            The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-            A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-            bred for hunting.
+            {{post.body}}
           </p>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-button>LIKE</button>
-          <button mat-button>SHARE</button>
-        </mat-card-actions>
-      </mat-card>
-      <!-- <div class="card-body">
-        <h3 class="card-title">
-          <span>id: {{ post.id }}</span>
-          <br />
-          <span>{{ post.title }}</span>
-        </h3>
-
-        <button
+          <button
           (click)="handleClick(post)"
           mat-raised-button
-          [color]="activatedService.isUserSelected(post.id) ? 'primary' : 'accent'"
+          [color]="activatedService.isPostSelected(post.id) ? 'primary' : 'accent'"
         >
-          {{
-            activatedService.isUserSelected(post.id) ? "Deactivate" : "Activate"
-          }}
+          {{ activatedService.isPostSelected(post.id) ? "Deactivate" : "Activate" }}
         </button>
-      </div> -->
-    </div>
-
+        </mat-card-actions>
+      </mat-card>
+    </ng-container>
+  </div>
 </ng-container>
 <ng-container *ngIf="error">
   <h2>{{ error }}</h2>

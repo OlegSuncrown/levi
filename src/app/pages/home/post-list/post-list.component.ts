@@ -54,13 +54,13 @@ export class PostListComponent implements OnInit {
     this.fetchPosts()
   }
 
-  handleClick(user) {
-    // const isSelected = this.activatedService.isUserSelected(user.id)
-    // if (isSelected) {
-    //   this.activatedService.deleteUser(user.id)
-    // } else {
-    //   this.activatedService.addUser(user)
-    // }
+  handleClick(post) {
+    const isSelected = this.activatedService.isPostSelected(post.id)
+    if (isSelected) {
+      this.activatedService.deletePost(post.id)
+    } else {
+      this.activatedService.addPost(post)
+    }
   }
 
 }

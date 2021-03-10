@@ -3,26 +3,22 @@
   justify-content: center;
 }
 
-mat-grid-tile {
-  background-color: rgb(233, 217, 217);
-}
-
-.card-body {
-  max-width: 300px;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.card-title {
-  margin: 0;
-}
-
-.center {
-  margin: auto;
-}
-
 .example-card {
-  max-width: 400px;
+  max-width: 350px;
+  flex-wrap: wrap;
+}
+
+.flex-container {
+  margin: 0 auto;
+  max-width: 1200px;
+  display: flex;
+  flex-wrap: wrap;
+
+  & > * {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 10px 4px;
+    background-color: rgb(255, 220, 220);
+  }
 }

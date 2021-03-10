@@ -8,14 +8,16 @@ import { ActivatedService } from 'src/app/services/activated.service';
 })
 export class ActivatedPageComponent implements OnInit {
   users$: any;
-  displayedColumns: string[] = ['position', 'name', 'username', 'email'];
-
+  posts$: any;
+  userColumns: string[] = ['position', 'name', 'username', 'email'];
+  postColumns: string[] = ['position', 'userId', 'title'];
   constructor(
     private activatedService: ActivatedService
   ) { }
 
   ngOnInit(): void {
     this.users$ = this.activatedService.getSelectedUsers$()
+    this.posts$ = this.activatedService.getSelectedPosts$()
   }
 
 }
