@@ -3,6 +3,12 @@
     <h1>Levi9</h1>
   </button>
   <span class="spacer"></span>
-  <button mat-flat-button color="primary">Home</button>
-  <button mat-flat-button color="accent">Activated</button>
+  <a
+    mat-button
+    routerLink="/"
+    routerLinkActive="mat-accent"
+    [routerLinkActiveOptions]="{ exact: true }"
+    >Home</a
+  >
+  <a mat-button routerLink="/activated" routerLinkActive="mat-accent">Activated</a>
 </mat-toolbar>
