@@ -5,6 +5,8 @@ import { ActivatedService } from 'src/app/services/activated.service';
 import { finalize, catchError } from 'rxjs/operators';
 import { throwError, Observable} from 'rxjs';
 
+import { User } from 'src/app/models/user.model'
+
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
@@ -12,7 +14,7 @@ import { throwError, Observable} from 'rxjs';
 })
 export class UserListComponent implements OnInit {
 
-  users$: Observable<any>;
+  users$: Observable<User[]>;
   spinner = true;
   error = '';
   url = 'https://jsonplaceholder.typicode.com/users'
@@ -54,7 +56,7 @@ export class UserListComponent implements OnInit {
     this.fetchUsers()
   }
 
-  handleClick(user) {
+  handleClick(user: User) {
     const isSelected = this.activatedService.isUserSelected(user.id)
     if (isSelected) {
       this.activatedService.deleteUser(user.id)

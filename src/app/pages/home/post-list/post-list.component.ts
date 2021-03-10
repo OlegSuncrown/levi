@@ -5,6 +5,8 @@ import { ActivatedService } from 'src/app/services/activated.service';
 import { finalize, catchError } from 'rxjs/operators';
 import { throwError, Observable} from 'rxjs';
 
+import { Post } from 'src/app/models/post.model'
+
 @Component({
   selector: 'app-post-list',
   templateUrl: './post-list.component.html',
@@ -12,7 +14,7 @@ import { throwError, Observable} from 'rxjs';
 })
 export class PostListComponent implements OnInit {
 
-  posts$: Observable<any>;
+  posts$: Observable<Post[]>;
   spinner = true;
   error = '';
   url = 'https://jsonplaceholder.typicode.com/posts'
@@ -54,7 +56,7 @@ export class PostListComponent implements OnInit {
     this.fetchPosts()
   }
 
-  handleClick(post) {
+  handleClick(post: Post) {
     const isSelected = this.activatedService.isPostSelected(post.id)
     if (isSelected) {
       this.activatedService.deletePost(post.id)

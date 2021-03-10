@@ -1,5 +1,9 @@
 import { Component, OnInit} from '@angular/core';
 import { ActivatedService } from 'src/app/services/activated.service';
+import { Observable } from 'rxjs';
+
+import { User } from 'src/app/models/user.model'
+import { Post } from 'src/app/models/post.model'
 
 @Component({
   selector: 'app-activated-page',
@@ -7,8 +11,9 @@ import { ActivatedService } from 'src/app/services/activated.service';
   styleUrls: ['./activated-page.component.scss']
 })
 export class ActivatedPageComponent implements OnInit {
-  users$: any;
-  posts$: any;
+  users$: Observable<User[]>;
+  posts$: Observable<Post[]>;
+
   userColumns: string[] = ['position', 'name', 'username', 'email'];
   postColumns: string[] = ['position', 'userId', 'title'];
   constructor(

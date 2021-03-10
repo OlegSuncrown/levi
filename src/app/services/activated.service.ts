@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
 
+import { User } from 'src/app/models/user.model'
+import { Post } from 'src/app/models/post.model'
+
 @Injectable({
   providedIn: 'root',
 })
 
 export class ActivatedService {
 
-  private selectedUsers: any = [];
-  private selectedUsers$ = new BehaviorSubject<any>([])
+  private selectedUsers: User[] = [];
+  private selectedUsers$ = new BehaviorSubject<User[]>([])
 
-  private selectedPosts: any = [];
-  private selectedPosts$ = new BehaviorSubject<any>([])
+  private selectedPosts: Post[] = [];
+  private selectedPosts$ = new BehaviorSubject<Post[]>([])
 
   constructor() { }
   
@@ -19,16 +22,16 @@ export class ActivatedService {
     return this.selectedUsers$.asObservable()
   }
 
-  isUserSelected(id) {
+  isUserSelected(id: number ) {
     return this.selectedUsers.find(user => user.id === id)
   }
 
-  addUser(user) {
+  addUser(user: User) {
     this.selectedUsers.push(user)
     this.selectedUsers$.next([...this.selectedUsers])
   }
 
-  deleteUser(id) {
+  deleteUser(id: number) {
     this.selectedUsers = this.selectedUsers.filter(user => user.id !== id)
     this.selectedUsers$.next([...this.selectedUsers])
   }
@@ -37,16 +40,16 @@ export class ActivatedService {
     return this.selectedPosts$.asObservable()
   }
 
-  isPostSelected(id) {
+  isPostSelected(id: number) {
     return this.selectedPosts.find(post => post.id === id)
   }
 
-  addPost(post) {
+  addPost(post: Post) {
     this.selectedPosts.push(post)
     this.selectedPosts$.next([...this.selectedPosts])
   }
 
-  deletePost(id) {
+  deletePost(id: number) {
     this.selectedPosts = this.selectedPosts.filter(post => post.id !== id)
     this.selectedPosts$.next([...this.selectedPosts])
   }
