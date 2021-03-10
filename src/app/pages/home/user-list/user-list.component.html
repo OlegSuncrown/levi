@@ -1,29 +1,39 @@
-<mat-paginator
-  class="flex-center"
-  (page)="handlePageEvent($event)"
-  [length]="length"
-  [pageSize]="pageSize"
-  [showFirstLastButtons]="showFirstLastButtons"
-  [pageSizeOptions]="pageSizeOptions"
-  [pageIndex]="pageIndex"
->
-</mat-paginator>
-<mat-grid-list cols="3" rowHeight="6:1">
-  <mat-grid-tile *ngFor="let user of users$ | async">
-    <div class="card-body">
-      <h3 class="card-title">
-        <span>id: {{ user.id }}</span>
-        <br />
-        <span>{{ user.name }}</span>
-      </h3>
+<ng-container *ngIf="users$ | async as users">
+  <mat-paginator
+    class="flex-center"
+    (page)="handlePageEvent($event)"
+    [length]="length"
+    [pageSize]="pageSize"
+    [showFirstLastButtons]="showFirstLastButtons"
+    [pageSizeOptions]="pageSizeOptions"
+    [pageIndex]="pageIndex"
+  >
+  </mat-paginator>
+  <mat-grid-list cols="3" rowHeight="6:1">
+    <mat-grid-tile *ngFor="let user of users">
+      <div class="card-body">
+        <h3 class="card-title">
+          <span>id: {{ user.id }}</span>
+          <br />
+          <span>{{ user.name }}</span>
+        </h3>
 
-      <button
-        (click)="handleClick(user)"
-        mat-raised-button
-        [color]="activatedService.isUserSelected(user.id) ? 'primary' : 'accent'"
-      >
-       {{activatedService.isUserSelected(user.id) ? 'Deactivate' : 'Activate'}}
-      </button>
-    </div>
-  </mat-grid-tile>
-</mat-grid-list>
+        <button
+          (click)="handleClick(user)"
+          mat-raised-button
+          [color]="activatedService.isUserSelected(user.id) ? 'primary' : 'accent'"
+        >
+          {{
+            activatedService.isUserSelected(user.id) ? "Deactivate" : "Activate"
+          }}
+        </button>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</ng-container>
+<ng-container *ngIf="error">
+  <h2>{{ error }}</h2>
+</ng-container>
+<ng-container *ngIf="spinner">
+  <mat-spinner class="center"></mat-spinner>
+</ng-container>

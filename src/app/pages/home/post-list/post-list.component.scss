@@ -1,0 +1,28 @@
+.flex-center {
+  display: flex;
+  justify-content: center;
+}
+
+mat-grid-tile {
+  background-color: rgb(233, 217, 217);
+}
+
+.card-body {
+  max-width: 300px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-title {
+  margin: 0;
+}
+
+.center {
+  margin: auto;
+}
+
+.example-card {
+  max-width: 400px;
+}

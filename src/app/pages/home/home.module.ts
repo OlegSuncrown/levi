@@ -7,6 +7,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { UserListComponent } from './user-list/user-list.component';
 import { PostListComponent } from './post-list/post-list.component';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [HomePageComponent, UserListComponent, PostListComponent],
@@ -15,7 +17,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
     HomeRoutingModule,
     MatButtonModule,
     MatPaginatorModule,
-    MatGridListModule
+    MatGridListModule,
+    MatProgressSpinnerModule,
+    MatCardModule
   ]
 })
 export class HomeModule { }

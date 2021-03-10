@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { DataService } from 'src/app/services/data.service';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedService } from 'src/app/services/activated.service';
+import { finalize, catchError } from 'rxjs/operators';
+import { throwError, Observable} from 'rxjs';
 
 @Component({
   selector: 'app-user-list',
@@ -12,36 +13,50 @@ import { ActivatedService } from 'src/app/services/activated.service';
 export class UserListComponent implements OnInit {
 
   users$: Observable<any>;
+  spinner = true;
+  error = '';
+  url = 'https://jsonplaceholder.typicode.com/users'
+  
+  // Pagination properties
   length = 10;
   pageSize = 10;
   pageIndex = 0;
   pageSizeOptions = [5, 10];
   showFirstLastButtons = false;
-  url = 'https://jsonplaceholder.typicode.com/users'
 
-  isSelected = false
   constructor(
     private dataService: DataService,
     public activatedService: ActivatedService
   ) { }
 
   ngOnInit(): void {
+    this.fetchUsers()
+  }
+
+  fetchUsers() {
     const url = `${this.url}?_start=${this.pageIndex * this.pageSize}&_limit=${this.pageSize}`
-    this.users$ = this.dataService.loadData(url)
+    this.users$ = this.dataService.loadData(url).pipe(
+      catchError(err => {
+        this.error = 'Could not load users' 
+        return throwError(err);
+    }),
+      finalize(() => {
+        this.spinner = false
+      })
+    )
   }
 
   handlePageEvent(event: PageEvent) {
     const { pageSize, pageIndex, length } = event
-    const url = `${this.url}?_start=${pageIndex * pageSize}&_limit=${pageSize}`
-    this.users$ = this.dataService.loadData(url)
     this.length = length;
     this.pageSize = pageSize;
     this.pageIndex = pageIndex;
+    this.fetchUsers()
   }
 
   handleClick(user) {
-    this.isSelected = this.activatedService.isUserSelected(user.id)
-    if(this.isSelected) {
+    const isSelected = this.activatedService.isUserSelected(user.id)
+    if (isSelected) {
       this.activatedService.deleteUser(user.id)
     } else {
       this.activatedService.addUser(user)
